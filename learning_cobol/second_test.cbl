@@ -17,7 +17,7 @@
            display "CHR: ", DEF-CHR.
            move DEF-CHR to DEF-X.
            move "asdfa" to TEST-XAR.
-           move TEST-XAR to TEST-BCAR.
+           move TEST-XAR(1) to TEST-BCAR(1). 
            display "X: ", function numval(DEF-X).
            call "hello_world".
       *    stop run.

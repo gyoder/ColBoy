@@ -1,7 +1,7 @@
 CC=gcc
 CBL = cobc
 
-CBL_FLAGS = -Wall -Werror
+CBL_FLAGS = -Wall
 
 UNAME = $(shell uname)
 OS_CC_FLAGS = 
@@ -15,19 +15,26 @@ O_DIR = $(BUILD_DIR)/out
 SRC_DIR = src
 TARGET = gbx
 
-OUTFILES = $(O_DIR)/main.o
+OUTFILES = $(O_DIR)/main.o $(O_DIR)/reset.o
 
 CFILES = 
 CBLFILES = main.cbl
 
-final: $(OUTFILES) $(BUILD_DIR) $(O_DIR)
+gbx: $(OUTFILES) $(BUILD_DIR) $(O_DIR)
 	gcc -o $(BUILD_DIR)/$(TARGET) $(OUTFILES) $(OS_CC_FLAGS) -lcob 
 
-$(O_DIR)/main.o: $(O_DIR)
+
+$(O_DIR)/main.o: $(O_DIR) $(SRC_DIR)/main.cbl
 	$(CBL) $(CBL_FLAGS) -c -x $(SRC_DIR)/main.cbl -o $(O_DIR)/main.o
 
+
+# CPU
+
+$(O_DIR)/reset.o: $(O_DIR) $(SRC_DIR)/cpu/reset.cbl
+	$(CBL) $(CBL_FLAGS) -c $(SRC_DIR)/cpu/reset.cbl -o $(O_DIR)/reset.o
+
 $(BUILD_DIR): 
-	@mkdir $(BUILD_DIR)
+	@mkdir -p $(BUILD_DIR)
 
 $(O_DIR): $(BUILD_DIR)
-	@mkdir $(O_DIR)
+	@mkdir -p $(O_DIR)

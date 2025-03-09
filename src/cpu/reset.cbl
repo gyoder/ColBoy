@@ -2,10 +2,11 @@
       *    Written by Grace
 
        identification division.
-       program-id. GBX.
+       program-id. CPU-RESET.
        environment division.
        data division.
        working-storage section.
+           01 dumb external binary-char.
            01 GBX-INTERNAL external.
                05 REGISTERS.
       *            > Program Counter   - 16bit                       
@@ -40,16 +41,29 @@
                    10 R-E binary-char unsigned.
                    10 R-H binary-char unsigned.
                    10 R-L binary-char unsigned.
-
+                   
       *        > All Addressable 16 bits of ram
                05 MAX_ADDR pic 9(5).
                05 MEMORY-ARR binary-char unsigned occurs 65536 times.
-           01 dumb external binary-char.
-       procedure division.
-           move 65536 to MAX_ADDR.
-           move 4 to R-A.
-           display "Register A: " R-A.
-           call "CPU-RESET". 
-           display "RESET: ", R-A.
 
-       end program GBX.
+           01 I pic 9(5) value 1.
+       procedure division.
+       MAIN.
+           move 5 to dumb.
+           move 0 to R-PC.
+           move 0 to R-SP.
+           move 0 to R-A.
+           move 0 to R-F.
+           move 0 to R-B.
+           move 0 to R-C.
+           move 0 to R-D.
+           move 0 to R-E.
+           move 0 to R-H.
+           move 0 to R-L.
+           perform SET-ZERO varying I from 1 by 1 until I > MAX_ADDR.
+           go to ENDP.
+       SET-ZERO.
+           move ZEROS to MEMORY-ARR(I).
+       ENDP.
+       end program CPU-RESET.
+       
