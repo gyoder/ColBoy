@@ -2,11 +2,10 @@
       *    Written by Grace
 
        identification division.
-       program-id. CPU_RESET.
+       program-id. GET_REGISTER.
        environment division.
        data division.
        working-storage section.
-           01 dumb external binary-char.
            01 REGISTERS external.
       *        > Program Counter   - 16bit                       
                05 R-PC binary-short unsigned.
@@ -41,30 +40,13 @@
                05 R-H binary-char unsigned.
                05 R-L binary-char unsigned.
            
-              
-      *    > All Addressable 16 bits of ram
-           01 MEMORY-R external.
-               05 MAX_ADDR pic 9(5).
-               05 MEMORY-ARR binary-char unsigned occurs 65536 times.
+       linkage section.
+           01 RET-VAL binary-char unsigned.
+           01 REG pic X any length.
+       procedure division using by reference RET-VAL, by reference REG.
+           
+           if REG = 'a'
+               move R-A to RET-VAL
+           end-if.
 
-           01 I pic 9(5) value 1.
-       procedure division.
-       MAIN.
-           move 5 to dumb.
-           move 0 to R-PC.
-           move 0 to R-SP.
-           move 0 to R-A.
-           move 0 to R-F.
-           move 0 to R-B.
-           move 0 to R-C.
-           move 0 to R-D.
-           move 0 to R-E.
-           move 0 to R-H.
-           move 0 to R-L.
-           perform SET-ZERO varying I from 1 by 1 until I > MAX_ADDR.
-           go to ENDP.
-       SET-ZERO.
-           move ZEROS to MEMORY-ARR(I).
-       ENDP.
-       end program CPU_RESET.
-       
+       end program GET_REGISTER.

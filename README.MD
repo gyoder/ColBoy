@@ -1,3 +1,3 @@
-# Stupid GameBoy Emulator Project
+# ColBoy
 
 this is a bad idea
