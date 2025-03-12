@@ -13,12 +13,12 @@ endif
 BUILD_DIR = ./build
 O_DIR = $(BUILD_DIR)/out
 SRC_DIR = src
-TARGET = gbx
+TARGET = cbx
 
 OUTFILES = $(O_DIR)/main.o $(O_DIR)/reset.o $(O_DIR)/get_register.o
 
 
-gbx: $(OUTFILES) $(BUILD_DIR) $(O_DIR)
+cbx: $(OUTFILES) $(BUILD_DIR) $(O_DIR)
 	gcc -o $(BUILD_DIR)/$(TARGET) $(OUTFILES) $(OS_CC_FLAGS) -lcob 
 
 
