@@ -2,7 +2,7 @@
       *    Written by Grace
 
        identification division.
-       program-id. GET_REGISTER.
+       program-id. TEST_RUNNER.
        environment division.
        data division.
        working-storage section.
@@ -40,55 +40,29 @@
                05 R-H binary-char unsigned.
                05 R-L binary-char unsigned.
            
-       linkage section.
-           01 RET-VAL binary-short unsigned.
-           01 REG pic X any length.
-       procedure division using by reference RET-VAL, by reference REG.
-           
-           if REG = 'a'
-               move R-A to RET-VAL
-           end-if.
-           if REG = 'b'
-               move R-B to RET-VAL
-           end-if.
-           if REG = 'c'
-               move R-C to RET-VAL
-           end-if.
-           if REG = 'd'
-               move R-D to RET-VAL
-           end-if.
-           if REG = 'e'
-               move R-E to RET-VAL
-           end-if.
-           if REG = 'h'
-               move R-H to RET-VAL
-           end-if.
-           if REG = 'l'
-               move R-L to RET-VAL
-           end-if.
-           if REG = 'pc'
-               move R-PC to RET-VAL
-           end-if.
-           if REG = 'sp'
-               move R-SP to RET-VAL
-           end-if.
-           if REG = 'bc'
-               move R-B to RET-VAL
-               multiply 256 by R-B
-               add R-C to RET-VAL
-           end-if.
-           if REG = 'de'
-               move R-D to RET-VAL
-               multiply 256 by R-D
-               add R-E to RET-VAL
-           end-if.
-           if REG = 'HL'
-               move R-H to RET-VAL
-               multiply 256 by R-H
-               add R-L to RET-VAL
-           end-if.
-           if REG = 'F'
-               move R-F to RET-VAL
-           end-if.
+              
+      *    > All Addressable 16 bits of ram
+           01 MEMORY-R  external.
+               05 MAX_ADDR pic 9(5).
+               05 MEMORY-ARR binary-char unsigned occurs 65536 times.
 
-       end program GET_REGISTER.
+
+           01 TEST-VARS.
+               05 TEST-NUM binary-char unsigned value 15.
+
+       procedure division.
+       display "==== C TESTS ===".
+       display "Running Basic Linkage Test".
+       call "basic_linkage_test".
+       display "".
+
+       display "Running Pass Value Test".
+       call "pass_value_test" using by value TEST-NUM.
+       display "".
+
+       display "Running Pass By Reference Test".
+       call "pass_reference_test" using by reference TEST-NUM.
+       display "New Value: ", TEST-NUM.
+       display "".
+
+       end program TEST_RUNNER.

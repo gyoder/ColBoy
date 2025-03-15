@@ -52,9 +52,7 @@
            move 65536 to MAX_ADDR.
            call "CPU_RESET". 
 
-           move 6 to R-A.
-           call "GET_REGISTER" using tst, by content reg.
 
-           display R-A, " ", tst.
+           call "TEST_RUNNER".
 
        end program CBX.
