@@ -1,8 +1,8 @@
 CC=gcc
 CBL = cobc
 
-CBL_FLAGS = -Wall -Werror -Wno-others
-CC_FLAGS = -Wall -Werror -Wno-unused-value
+CBL_FLAGS = -Wall -Werror -Wno-others -Wno-unfinished -Wno-dialect 
+CC_FLAGS = -Wall -Werror -Wno-unused-value 
 
 UNAME = $(shell uname)
 OS_CC_FLAGS = 
@@ -16,7 +16,7 @@ O_DIR = $(BUILD_DIR)/out
 SRC_DIR = src
 TARGET = cbx
 
-OUTFILES = $(O_DIR)/main.o $(O_DIR)/reset.o $(O_DIR)/get_register.o $(O_DIR)/state_tests.o $(O_DIR)/linkage_tests.o $(O_DIR)/test_runner.o
+OUTFILES = $(O_DIR)/main.o $(O_DIR)/reset.o $(O_DIR)/get_register.o $(O_DIR)/set_register.o $(O_DIR)/state_tests.o $(O_DIR)/linkage_tests.o $(O_DIR)/test_runner.o
 
 cbx: $(BUILD_DIR) $(O_DIR) $(OUTFILES)  
 	$(CC) -o $(BUILD_DIR)/$(TARGET) $(OUTFILES) $(OS_CC_FLAGS) -lcob 
@@ -37,6 +37,8 @@ $(O_DIR)/reset.o: $(SRC_DIR)/cpu/reset.cbl
 $(O_DIR)/get_register.o: $(SRC_DIR)/interfaces/get_register.cbl
 	$(CBL) $(CBL_FLAGS) -c $(SRC_DIR)/interfaces/get_register.cbl -o $(O_DIR)/get_register.o
 
+$(O_DIR)/set_register.o: $(SRC_DIR)/interfaces/set_register.cbl
+	$(CBL) $(CBL_FLAGS) -c $(SRC_DIR)/interfaces/set_register.cbl -o $(O_DIR)/set_register.o
 
 # Tests
 
@@ -47,7 +49,13 @@ $(O_DIR)/linkage_tests.o: $(SRC_DIR)/tests/linkage_tests.c $(SRC_DIR)/tests/stat
 	$(CC) $(CC_FLAGS) -c $(SRC_DIR)/tests/linkage_tests.c -o $(O_DIR)/linkage_tests.o
 
 $(O_DIR)/state_tests.o: $(SRC_DIR)/tests/state_tests.c $(SRC_DIR)/tests/state_tests.h $(SRC_DIR)/interfaces/interfaces.h
-	$(CC) $(CC_FLAGS) -c $(SRC_DIR)/tests/state_tests.c -o $(O_DIR)/state_tests.o
+	$(CC) $(CC_FLAGS) -c $(SRC_DIR)/tests/state_tests.c -o $(O_DIR)/state_tests.o 
+
+
+
+
+
+
 
 $(BUILD_DIR): 
 	@mkdir -p $(BUILD_DIR)

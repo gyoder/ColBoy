@@ -2,7 +2,7 @@
       *    Written by Grace
 
        identification division.
-       program-id. GET_REGISTER.
+       program-id. SET_REGISTER.
        environment division.
        data division.
        working-storage section.
@@ -43,52 +43,52 @@
        linkage section.
            01 RET-VAL binary-short unsigned.
            01 REG pic X any length.
-       procedure division using by reference RET-VAL, by reference REG.
-           
-           if REG = 'a'
-               move R-A to RET-VAL
-           end-if.
-           if REG = 'b'
-               move R-B to RET-VAL
-           end-if.
-           if REG = 'c'
-               move R-C to RET-VAL
-           end-if.
-           if REG = 'd'
-               move R-D to RET-VAL
-           end-if.
-           if REG = 'e'
-               move R-E to RET-VAL
-           end-if.
-           if REG = 'h'
-               move R-H to RET-VAL
-           end-if.
-           if REG = 'l'
-               move R-L to RET-VAL
-           end-if.
-           if REG = 'pc'
-               move R-PC to RET-VAL
-           end-if.
-           if REG = 'sp'
-               move R-SP to RET-VAL
-           end-if.
+       procedure division using by value RET-VAL, by reference REG.
            if REG = 'bc'
-               move R-B to RET-VAL
-               multiply 256 by R-B
-               add R-C to RET-VAL
+               divide RET-VAL by 256 giving R-B remainder R-C
            end-if.
            if REG = 'de'
-               move R-D to RET-VAL
-               multiply 256 by R-D
-               add R-E to RET-VAL
+               divide RET-VAL by 256 giving R-D remainder R-E
            end-if.
            if REG = 'hl'
-               move R-H to RET-VAL
-               multiply 256 by R-H
-               add R-L to RET-VAL
+               divide RET-VAL by 256 giving R-H remainder R-L
+           end-if.
+           if RET-VAL greater than 255
+                   if not (REG = 'bc' or REG = 'de' or reg = 'hl' 
+      -            or reg = 'pc' or reg = 'sp')
+                               display "BAD REGISTER CALL :( EXITING"
+                               stop run
+                    end-if
+           end-if.
+           if REG = 'a'
+               move RET-VAL to R-A
+           end-if.
+           if REG = 'b'
+               move RET-VAL to R-B
+           end-if.
+           if REG = 'c'
+               move RET-VAL to R-C
+           end-if.
+           if REG = 'd'
+               move RET-VAL to R-D
+           end-if.
+           if REG = 'e'
+               move RET-VAL to R-E
+           end-if.
+           if REG = 'h'
+               move RET-VAL to R-H
+           end-if.
+           if REG = 'l'
+               move RET-VAL to R-L
+           end-if.
+           if REG = 'pc'
+               move RET-VAL to R-PC
+           end-if.
+           if REG = 'sp'
+               move RET-VAL to R-SP
            end-if.
            if REG = 'F'
-               move R-F to RET-VAL
+               move RET-VAL to R-F
            end-if.
 
-       end program GET_REGISTER.
+       end program SET_REGISTER.

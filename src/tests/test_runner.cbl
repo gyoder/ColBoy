@@ -51,7 +51,7 @@
                05 TEST-NUM binary-char unsigned value 15.
 
        procedure division.
-       display "==== C TESTS ===".
+       display "==== C TESTS ====".
        display "Running Basic Linkage Test".
        call "basic_linkage_test".
        display "".
@@ -64,5 +64,10 @@
        call "pass_reference_test" using by reference TEST-NUM.
        display "New Value: ", TEST-NUM.
        display "".
+
+       display "==== STATE TESTS ===="
+       display "Running Register Verification Tests".
+      * Not working for some reason. makes segfault
+      *call "verify_reg".
 
        end program TEST_RUNNER.
