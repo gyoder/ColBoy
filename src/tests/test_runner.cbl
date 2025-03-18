@@ -49,6 +49,7 @@
 
            01 TEST-VARS.
                05 TEST-NUM binary-char unsigned value 15.
+               05 TEST-SHORT binary-short unsigned value 0.
 
        procedure division.
        display "==== C TESTS ====".
@@ -69,5 +70,48 @@
        display "Running Register Verification Tests".
       * Not working for some reason. makes segfault
       *call "verify_reg".
+       move 6 to R-A.
+       call "GET_REGISTER" using by reference TEST-NUM, by content 'a'.
+       if not TEST-NUM = 6
+           display "SET REG FAIL"
+       else
+           display "SET_REGISTER Success"
+       end-if.
+       call "SET_REGISTER" using by value 5, by content 'a'.
+       if not R-A = 5
+           display "GET REG FAIL"
+       else
+           display "GET_REGISTER Success"
+       end-if.
 
+
+       display "".
+       display "Memory Address Get and Set".
+       move 5 to MEMORY-ARR (6).
+       call "READ_BYTE" using by reference TEST-NUM, by value 5.
+       if not TEST-NUM = 5
+           display "READ_BYTE FAIL"
+       else
+           display "READ_BYTE Success"
+       end-if.
+       call "WRITE_BYTE" using by value 7, by value 6.
+       if not MEMORY-ARR (7) = 7
+           display "WRITE_BYTE FAIL"
+       else
+           display "WRITE_BYTE Success"
+       end-if. 
+       move 2 to MEMORY-ARR (9).
+       move 1 to MEMORY-ARR (10).
+       call "READ_WORD" using by reference TEST-SHORT, by value 8.
+       if not TEST-SHORT = 258
+           display "READ_WORD FAIL"
+       else
+           display "READ_WORD Success"
+       end-if.  
+       call "WRITE_WORD" using by value 258, by value 19.
+       if not (MEMORY-ARR (20) = 2 and MEMORY-ARR (21) = 1)
+           display "WRITE_WORD FAIL"
+       else
+           display "WRITE_WORD Success"
+       end-if. 
        end program TEST_RUNNER.

@@ -16,7 +16,7 @@ O_DIR = $(BUILD_DIR)/out
 SRC_DIR = src
 TARGET = cbx
 
-OUTFILES = $(O_DIR)/main.o $(O_DIR)/reset.o $(O_DIR)/get_register.o $(O_DIR)/set_register.o $(O_DIR)/state_tests.o $(O_DIR)/linkage_tests.o $(O_DIR)/test_runner.o
+OUTFILES = $(O_DIR)/main.o $(O_DIR)/reset.o $(O_DIR)/get_register.o $(O_DIR)/set_register.o $(O_DIR)/state_tests.o $(O_DIR)/linkage_tests.o $(O_DIR)/test_runner.o $(O_DIR)/read_byte.o $(O_DIR)/write_byte.o $(O_DIR)/read_word.o $(O_DIR)/write_word.o
 
 cbx: $(BUILD_DIR) $(O_DIR) $(OUTFILES)  
 	$(CC) -o $(BUILD_DIR)/$(TARGET) $(OUTFILES) $(OS_CC_FLAGS) -lcob 
@@ -40,6 +40,17 @@ $(O_DIR)/get_register.o: $(SRC_DIR)/interfaces/get_register.cbl
 $(O_DIR)/set_register.o: $(SRC_DIR)/interfaces/set_register.cbl
 	$(CBL) $(CBL_FLAGS) -c $(SRC_DIR)/interfaces/set_register.cbl -o $(O_DIR)/set_register.o
 
+$(O_DIR)/read_byte.o: $(SRC_DIR)/interfaces/read_byte.cbl
+	$(CBL) $(CBL_FLAGS) -c $(SRC_DIR)/interfaces/read_byte.cbl -o $(O_DIR)/read_byte.o
+	
+$(O_DIR)/write_byte.o: $(SRC_DIR)/interfaces/write_byte.cbl
+	$(CBL) $(CBL_FLAGS) -c $(SRC_DIR)/interfaces/write_byte.cbl -o $(O_DIR)/write_byte.o
+
+$(O_DIR)/read_word.o: $(SRC_DIR)/interfaces/read_word.cbl
+	$(CBL) $(CBL_FLAGS) -c $(SRC_DIR)/interfaces/read_word.cbl -o $(O_DIR)/read_word.o
+	
+$(O_DIR)/write_word.o: $(SRC_DIR)/interfaces/write_word.cbl
+	$(CBL) $(CBL_FLAGS) -c $(SRC_DIR)/interfaces/write_word.cbl -o $(O_DIR)/write_word.o	
 # Tests
 
 $(O_DIR)/test_runner.o: $(SRC_DIR)/tests/test_runner.cbl
