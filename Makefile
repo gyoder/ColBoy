@@ -16,7 +16,7 @@ O_DIR = $(BUILD_DIR)/out
 SRC_DIR = src
 TARGET = cbx
 
-OUTFILES = $(O_DIR)/main.o $(O_DIR)/reset.o $(O_DIR)/get_register.o $(O_DIR)/set_register.o $(O_DIR)/state_tests.o $(O_DIR)/linkage_tests.o $(O_DIR)/test_runner.o $(O_DIR)/read_byte.o $(O_DIR)/write_byte.o $(O_DIR)/read_word.o $(O_DIR)/write_word.o
+OUTFILES = $(O_DIR)/main.o $(O_DIR)/reset.o $(O_DIR)/get_register.o $(O_DIR)/set_register.o $(O_DIR)/state_tests.o $(O_DIR)/linkage_tests.o $(O_DIR)/test_runner.o $(O_DIR)/read_byte.o $(O_DIR)/write_byte.o $(O_DIR)/read_word.o $(O_DIR)/write_word.o $(O_DIR)/i_ld_byte.o
 
 cbx: $(BUILD_DIR) $(O_DIR) $(OUTFILES)  
 	$(CC) -o $(BUILD_DIR)/$(TARGET) $(OUTFILES) $(OS_CC_FLAGS) -lcob 
@@ -31,6 +31,8 @@ $(O_DIR)/main.o: $(SRC_DIR)/main.cbl
 $(O_DIR)/reset.o: $(SRC_DIR)/cpu/reset.cbl
 	$(CBL) $(CBL_FLAGS) -c $(SRC_DIR)/cpu/reset.cbl -o $(O_DIR)/reset.o
 
+$(O_DIR)/i_ld_byte.o: $(SRC_DIR)/cpu/i_ld_byte.cbl
+	$(CBL) $(CBL_FLAGS) -c $(SRC_DIR)/cpu/i_ld_byte.cbl -o $(O_DIR)/i_ld_byte.o
 
 # Interfaces
 
